@@ -1,5 +1,8 @@
 # KoCo
 
+[![Available from NPM](https://img.shields.io/npm/v/ko-co.svg?maxAge=900)](https://www.npmjs.com/package/ko-co)
+[![Built using Travis](https://img.shields.io/travis/lsphillips/KoCo/master.svg?maxAge=900)](https://travis-ci.org/lsphillips/KoCo)
+
 Adds support for the Konami Code; making your website automatically cool.
 
 ## What is the Konami Code?
