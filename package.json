@@ -1,0 +1,56 @@
+{
+	"name" : "ko-co",
+
+	"version" : "0.1.0",
+
+	"description" : "Adds support for the Konami Code; making your website automatically cool.",
+
+	"author" :
+	{
+		"name" : "Luke Phillips",
+		"email" : "lsphillips.mail@gmail.com"
+	},
+
+	"keywords" :
+	[
+		"konami code",
+		"easter egg",
+		"konami"
+	],
+
+	"homepage" : "https://github.com/lsphillips/KoCo",
+
+	"bugs" :
+	{
+		"url" : "https://github.com/lsphillips/KoCo/issues"
+	},
+
+	"devDependencies" :
+	{
+		"jsdom" : "9.9.1",
+		"sinon" : "1.17.7",
+		"grunt" : "1.0.1",
+		"grunt-eslint" : "19.0.0",
+		"grunt-mocha-cli" : "2.1.0"
+	},
+
+	"main" : "src/KoCo.js",
+
+	"repository" :
+	{
+		"type" : "git",
+		"url" : "https://github.com/lsphillips/KoCo.git"
+	},
+
+	"scripts" :
+	{
+		"test" : "grunt test"
+	},
+
+	"license" : "MIT",
+
+	"engines" :
+	{
+		"node" : ">=6.0.0"
+	}
+}

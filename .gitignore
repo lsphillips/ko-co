@@ -1,0 +1,19 @@
+# Files
+# -----------------
+
+.DS_Store
+
+# File Types
+# -----------------
+
+*.db
+*.log
+*.zip
+*.iml
+*.sublime-*
+*.log.*
+
+# NPM
+# -----------------
+
+/node_modules
