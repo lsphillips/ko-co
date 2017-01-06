@@ -14,7 +14,7 @@ const jsdom = require('jsdom');
 
 const matchKonamiCodeEvent = sinon.match(function (value)
 {
-    return value instanceof window.CustomEvent && value.type === 'konamicode';
+	return value instanceof window.CustomEvent && value.type === 'konamicode';
 
 }, 'Konami Code Event');
 
@@ -22,343 +22,343 @@ const matchKonamiCodeEvent = sinon.match(function (value)
 
 function triggerKeyboardPress (key, target = document)
 {
-    target.dispatchEvent(
-        new window.KeyboardEvent('keydown',
-        {
-            key
-        })
-    );
+	target.dispatchEvent(
+		new window.KeyboardEvent('keydown',
+		{
+			key
+		})
+	);
 }
 
 // --------------------------------------------------------
 
 describe('KoCo', function ()
 {
-    const KoCo = require('../src/KoCo');
+	const KoCo = require('../src/KoCo');
 
-    // ----------------------------------------------------
+	// -------------------------------------------------------
 
-    beforeEach(function (done)
-    {
-        jsdom.env(
-        {
-            html :
-            `
-                <html>
-                    <head>
-                        <title> The Konami Code Test Page </title>
-                    </head>
-                    <body>
-                        <input type="text" id="konami" />
-                    </body>
-                </html>
-            `,
+	beforeEach(function (done)
+	{
+		jsdom.env(
+		{
+			html :
+			`
+				<html>
+					<head>
+						<title> The Konami Code Test Page </title>
+					</head>
+					<body>
+						<input type="text" id="konami" />
+					</body>
+				</html>
+			`,
 
-            done : (error, window) =>
-            {
-                if (error)
-                {
-                    done(
-                        new Error(`Could not create a JSDOM window. ${error}`)
-                    );
+			done : (error, window) =>
+			{
+				if (error)
+				{
+					done(
+						new Error(`Could not create a JSDOM window. ${error}`)
+					);
 
-                    return;
-                }
+					return;
+				}
 
-                // Expose `document`, `window` & `navigator` as globals
+				// Expose `document`, `window` & `navigator` as globals
 				// to emulate a browser environment.
 				global.document  = window.document;
 				global.window    = window;
 				global.navigator = window.navigator;
 
-                done();
-            }
-        });
-    });
+				done();
+			}
+		});
+	});
 
-    // ----------------------------------------------------
+	// -------------------------------------------------------
 
-    afterEach(function ()
-    {
-        // Close.
-        global.window.close();
+	afterEach(function ()
+	{
+		// Close.
+		global.window.close();
 
-        // Clear.
-        delete global.window;
-        delete global.document;
-        delete global.navigator;
-    });
+		// Clear.
+		delete global.window;
+		delete global.document;
+		delete global.navigator;
+	});
 
-    // ----------------------------------------------------
+	// -------------------------------------------------------
 
-    describe('.addSupportForTheKonamiCode(options)', function ()
-    {
-        beforeEach(function ()
-        {
-            sinon.spy(document, 'dispatchEvent');
-        });
+	describe('.addSupportForTheKonamiCode(options)', function ()
+	{
+		beforeEach(function ()
+		{
+			sinon.spy(document, 'dispatchEvent');
+		});
 
-        // ------------------------------------------------
+		// ------------------------------------------------------
 
-        context('shall enable the `konamicode` custom event to be emitted', function ()
-        {
-            it('every time the Konami Code sequence is entered correctly', function ()
-            {
-                // Act.
-                KoCo.addSupportForTheKonamiCode();
+		context('shall enable the `konamicode` custom event to be emitted', function ()
+		{
+			it('every time the Konami Code sequence is entered correctly', function ()
+			{
+				// Act.
+				KoCo.addSupportForTheKonamiCode();
 
-                // Setup.
-                triggerKeyboardPress('ArrowUp');
-                triggerKeyboardPress('ArrowUp');
-                triggerKeyboardPress('ArrowDown');
-                triggerKeyboardPress('ArrowDown');
-                triggerKeyboardPress('ArrowLeft');
-                triggerKeyboardPress('ArrowRight');
-                triggerKeyboardPress('ArrowLeft');
-                triggerKeyboardPress('ArrowRight');
-                triggerKeyboardPress('b');
-                triggerKeyboardPress('a');
+				// Setup.
+				triggerKeyboardPress('ArrowUp');
+				triggerKeyboardPress('ArrowUp');
+				triggerKeyboardPress('ArrowDown');
+				triggerKeyboardPress('ArrowDown');
+				triggerKeyboardPress('ArrowLeft');
+				triggerKeyboardPress('ArrowRight');
+				triggerKeyboardPress('ArrowLeft');
+				triggerKeyboardPress('ArrowRight');
+				triggerKeyboardPress('b');
+				triggerKeyboardPress('a');
 
-                // Assert.
-                sinon.assert.calledWith(document.dispatchEvent, matchKonamiCodeEvent);
+				// Assert.
+				sinon.assert.calledWith(document.dispatchEvent, matchKonamiCodeEvent);
 
-                // Setup.
-                triggerKeyboardPress('ArrowUp');
-                triggerKeyboardPress('ArrowUp');
-                triggerKeyboardPress('ArrowDown');
-                triggerKeyboardPress('ArrowDown');
-                triggerKeyboardPress('ArrowLeft');
-                triggerKeyboardPress('ArrowRight');
-                triggerKeyboardPress('ArrowLeft');
-                triggerKeyboardPress('ArrowRight');
-                triggerKeyboardPress('b');
-                triggerKeyboardPress('a');
+				// Setup.
+				triggerKeyboardPress('ArrowUp');
+				triggerKeyboardPress('ArrowUp');
+				triggerKeyboardPress('ArrowDown');
+				triggerKeyboardPress('ArrowDown');
+				triggerKeyboardPress('ArrowLeft');
+				triggerKeyboardPress('ArrowRight');
+				triggerKeyboardPress('ArrowLeft');
+				triggerKeyboardPress('ArrowRight');
+				triggerKeyboardPress('b');
+				triggerKeyboardPress('a');
 
-                // Assert.
-                sinon.assert.calledWith(document.dispatchEvent, matchKonamiCodeEvent);
-            });
+				// Assert.
+				sinon.assert.calledWith(document.dispatchEvent, matchKonamiCodeEvent);
+			});
 
-            // --------------------------------------------
+			// -----------------------------------------------------
 
-            it('by the element that the user used to enter the Konami Code', function ()
-            {
-                let theKonamiCodeTextField = document.getElementById('konami');
+			it('by the element that the user used to enter the Konami Code', function ()
+			{
+				let theKonamiCodeTextField = document.getElementById('konami');
 
-                // Spy.
-                sinon.spy(theKonamiCodeTextField, 'dispatchEvent');
+				// Spy.
+				sinon.spy(theKonamiCodeTextField, 'dispatchEvent');
 
-                // Act.
-                KoCo.addSupportForTheKonamiCode();
+				// Act.
+				KoCo.addSupportForTheKonamiCode();
 
-                // Setup.
-                triggerKeyboardPress('ArrowUp'   , theKonamiCodeTextField);
-                triggerKeyboardPress('ArrowUp'   , theKonamiCodeTextField);
-                triggerKeyboardPress('ArrowDown' , theKonamiCodeTextField);
-                triggerKeyboardPress('ArrowDown' , theKonamiCodeTextField);
-                triggerKeyboardPress('ArrowLeft' , theKonamiCodeTextField);
-                triggerKeyboardPress('ArrowRight', theKonamiCodeTextField);
-                triggerKeyboardPress('ArrowLeft' , theKonamiCodeTextField);
-                triggerKeyboardPress('ArrowRight', theKonamiCodeTextField);
-                triggerKeyboardPress('b'         , theKonamiCodeTextField);
-                triggerKeyboardPress('a'         , theKonamiCodeTextField);
+				// Setup.
+				triggerKeyboardPress('ArrowUp'   , theKonamiCodeTextField);
+				triggerKeyboardPress('ArrowUp'   , theKonamiCodeTextField);
+				triggerKeyboardPress('ArrowDown' , theKonamiCodeTextField);
+				triggerKeyboardPress('ArrowDown' , theKonamiCodeTextField);
+				triggerKeyboardPress('ArrowLeft' , theKonamiCodeTextField);
+				triggerKeyboardPress('ArrowRight', theKonamiCodeTextField);
+				triggerKeyboardPress('ArrowLeft' , theKonamiCodeTextField);
+				triggerKeyboardPress('ArrowRight', theKonamiCodeTextField);
+				triggerKeyboardPress('b'         , theKonamiCodeTextField);
+				triggerKeyboardPress('a'         , theKonamiCodeTextField);
 
-                // Assert.
-                sinon.assert.calledWith(theKonamiCodeTextField.dispatchEvent, matchKonamiCodeEvent);
-            });
+				// Assert.
+				sinon.assert.calledWith(theKonamiCodeTextField.dispatchEvent, matchKonamiCodeEvent);
+			});
 
-            // --------------------------------------------
+			// -----------------------------------------------------
 
-            it('that bubbles', function ()
-            {
-                // Act.
-                KoCo.addSupportForTheKonamiCode();
+			it('that bubbles', function ()
+			{
+				// Act.
+				KoCo.addSupportForTheKonamiCode();
 
-                // Setup.
-                triggerKeyboardPress('ArrowUp');
-                triggerKeyboardPress('ArrowUp');
-                triggerKeyboardPress('ArrowDown');
-                triggerKeyboardPress('ArrowDown');
-                triggerKeyboardPress('ArrowLeft');
-                triggerKeyboardPress('ArrowRight');
-                triggerKeyboardPress('ArrowLeft');
-                triggerKeyboardPress('ArrowRight');
-                triggerKeyboardPress('b');
-                triggerKeyboardPress('a');
+				// Setup.
+				triggerKeyboardPress('ArrowUp');
+				triggerKeyboardPress('ArrowUp');
+				triggerKeyboardPress('ArrowDown');
+				triggerKeyboardPress('ArrowDown');
+				triggerKeyboardPress('ArrowLeft');
+				triggerKeyboardPress('ArrowRight');
+				triggerKeyboardPress('ArrowLeft');
+				triggerKeyboardPress('ArrowRight');
+				triggerKeyboardPress('b');
+				triggerKeyboardPress('a');
 
-                // Assert.
-                sinon.assert.calledWith(
-                    document.dispatchEvent, sinon.match.has('bubbles', true)
-                );
-            });
+				// Assert.
+				sinon.assert.calledWith(
+					document.dispatchEvent, sinon.match.has('bubbles', true)
+				);
+			});
 
-            // --------------------------------------------
+			// -----------------------------------------------------
 
-            it('every time the Konami Code sequence followed by the Enter key is entered when `options.requireEnterPress` is `true`', function ()
-            {
-                // Act.
-                KoCo.addSupportForTheKonamiCode(
-                {
-                    requireEnterPress : true
-                });
+			it('every time the Konami Code sequence followed by the Enter key is entered when `options.requireEnterPress` is `true`', function ()
+			{
+				// Act.
+				KoCo.addSupportForTheKonamiCode(
+				{
+					requireEnterPress : true
+				});
 
-                // Setup.
-                triggerKeyboardPress('ArrowUp');
-                triggerKeyboardPress('ArrowUp');
-                triggerKeyboardPress('ArrowDown');
-                triggerKeyboardPress('ArrowDown');
-                triggerKeyboardPress('ArrowLeft');
-                triggerKeyboardPress('ArrowRight');
-                triggerKeyboardPress('ArrowLeft');
-                triggerKeyboardPress('ArrowRight');
-                triggerKeyboardPress('b');
-                triggerKeyboardPress('a');
+				// Setup.
+				triggerKeyboardPress('ArrowUp');
+				triggerKeyboardPress('ArrowUp');
+				triggerKeyboardPress('ArrowDown');
+				triggerKeyboardPress('ArrowDown');
+				triggerKeyboardPress('ArrowLeft');
+				triggerKeyboardPress('ArrowRight');
+				triggerKeyboardPress('ArrowLeft');
+				triggerKeyboardPress('ArrowRight');
+				triggerKeyboardPress('b');
+				triggerKeyboardPress('a');
 
-                // Assert.
-                sinon.assert.neverCalledWith(document.dispatchEvent, matchKonamiCodeEvent);
+				// Assert.
+				sinon.assert.neverCalledWith(document.dispatchEvent, matchKonamiCodeEvent);
 
-                // Setup.
-                triggerKeyboardPress('Enter');
+				// Setup.
+				triggerKeyboardPress('Enter');
 
-                // Assert.
-                sinon.assert.calledWith(document.dispatchEvent, matchKonamiCodeEvent);
+				// Assert.
+				sinon.assert.calledWith(document.dispatchEvent, matchKonamiCodeEvent);
 
-                // Setup.
-                triggerKeyboardPress('ArrowUp');
-                triggerKeyboardPress('ArrowUp');
-                triggerKeyboardPress('ArrowDown');
-                triggerKeyboardPress('ArrowDown');
-                triggerKeyboardPress('ArrowLeft');
-                triggerKeyboardPress('ArrowRight');
-                triggerKeyboardPress('ArrowLeft');
-                triggerKeyboardPress('ArrowRight');
-                triggerKeyboardPress('b');
-                triggerKeyboardPress('a');
-                triggerKeyboardPress('Enter');
+				// Setup.
+				triggerKeyboardPress('ArrowUp');
+				triggerKeyboardPress('ArrowUp');
+				triggerKeyboardPress('ArrowDown');
+				triggerKeyboardPress('ArrowDown');
+				triggerKeyboardPress('ArrowLeft');
+				triggerKeyboardPress('ArrowRight');
+				triggerKeyboardPress('ArrowLeft');
+				triggerKeyboardPress('ArrowRight');
+				triggerKeyboardPress('b');
+				triggerKeyboardPress('a');
+				triggerKeyboardPress('Enter');
 
-                // Assert.
-                sinon.assert.calledWith(document.dispatchEvent, matchKonamiCodeEvent);
-            });
+				// Assert.
+				sinon.assert.calledWith(document.dispatchEvent, matchKonamiCodeEvent);
+			});
 
-            // --------------------------------------------
+			// -----------------------------------------------------
 
-            it('even when the user takes a long time to enter the next key in the Konami Code sequence', function (done)
-            {
-                this.timeout(5000);
+			it('even when the user takes a long time to enter the next key in the Konami Code sequence', function (done)
+			{
+				this.timeout(5000);
 
-                // Act.
-                KoCo.addSupportForTheKonamiCode();
+				// Act.
+				KoCo.addSupportForTheKonamiCode();
 
-                // Setup.
-                triggerKeyboardPress('ArrowUp');
-                triggerKeyboardPress('ArrowUp');
+				// Setup.
+				triggerKeyboardPress('ArrowUp');
+				triggerKeyboardPress('ArrowUp');
 
-                // Setup.
-                setTimeout(function ()
-                {
-                    triggerKeyboardPress('ArrowDown');
-                    triggerKeyboardPress('ArrowDown');
-                    triggerKeyboardPress('ArrowLeft');
-                    triggerKeyboardPress('ArrowRight');
-                    triggerKeyboardPress('ArrowLeft');
-                    triggerKeyboardPress('ArrowRight');
-                    triggerKeyboardPress('b');
-                    triggerKeyboardPress('a');
+				// Setup.
+				setTimeout(function ()
+				{
+					triggerKeyboardPress('ArrowDown');
+					triggerKeyboardPress('ArrowDown');
+					triggerKeyboardPress('ArrowLeft');
+					triggerKeyboardPress('ArrowRight');
+					triggerKeyboardPress('ArrowLeft');
+					triggerKeyboardPress('ArrowRight');
+					triggerKeyboardPress('b');
+					triggerKeyboardPress('a');
 
-                    // Assert.
-                    sinon.assert.calledWith(document.dispatchEvent, matchKonamiCodeEvent);
+					// Assert.
+					sinon.assert.calledWith(document.dispatchEvent, matchKonamiCodeEvent);
 
-                    done();
+					done();
 
-                }, 4500);
-            });
+				}, 4500);
+			});
 
-            // --------------------------------------------
+			// -----------------------------------------------------
 
-            it('but not when the Konami Code sequence is interrupted by an unexpected key (progress will be reset)', function ()
-            {
-                // Act.
-                KoCo.addSupportForTheKonamiCode();
+			it('but not when the Konami Code sequence is interrupted by an unexpected key (progress will be reset)', function ()
+			{
+				// Act.
+				KoCo.addSupportForTheKonamiCode();
 
-                // Setup.
-                triggerKeyboardPress('ArrowUp');
-                triggerKeyboardPress('ArrowUp');
-                triggerKeyboardPress('ArrowDown');
-                triggerKeyboardPress('ArrowDown');
-                triggerKeyboardPress('ArrowLeft');
-                triggerKeyboardPress('ArrowRight');
-                triggerKeyboardPress('ArrowLeft');
-                triggerKeyboardPress('ArrowRight');
-                triggerKeyboardPress('c');
-                triggerKeyboardPress('b');
-                triggerKeyboardPress('a');
+				// Setup.
+				triggerKeyboardPress('ArrowUp');
+				triggerKeyboardPress('ArrowUp');
+				triggerKeyboardPress('ArrowDown');
+				triggerKeyboardPress('ArrowDown');
+				triggerKeyboardPress('ArrowLeft');
+				triggerKeyboardPress('ArrowRight');
+				triggerKeyboardPress('ArrowLeft');
+				triggerKeyboardPress('ArrowRight');
+				triggerKeyboardPress('c');
+				triggerKeyboardPress('b');
+				triggerKeyboardPress('a');
 
-                // Assert.
-                sinon.assert.neverCalledWith(document.dispatchEvent, matchKonamiCodeEvent);
+				// Assert.
+				sinon.assert.neverCalledWith(document.dispatchEvent, matchKonamiCodeEvent);
 
-                // Setup.
-                triggerKeyboardPress('ArrowUp');
-                triggerKeyboardPress('ArrowUp');
-                triggerKeyboardPress('ArrowDown');
-                triggerKeyboardPress('ArrowDown');
-                triggerKeyboardPress('ArrowLeft');
-                triggerKeyboardPress('ArrowRight');
-                triggerKeyboardPress('ArrowLeft');
-                triggerKeyboardPress('ArrowRight');
-                triggerKeyboardPress('b');
-                triggerKeyboardPress('a');
+				// Setup.
+				triggerKeyboardPress('ArrowUp');
+				triggerKeyboardPress('ArrowUp');
+				triggerKeyboardPress('ArrowDown');
+				triggerKeyboardPress('ArrowDown');
+				triggerKeyboardPress('ArrowLeft');
+				triggerKeyboardPress('ArrowRight');
+				triggerKeyboardPress('ArrowLeft');
+				triggerKeyboardPress('ArrowRight');
+				triggerKeyboardPress('b');
+				triggerKeyboardPress('a');
 
-                // Assert.
-                sinon.assert.calledWith(document.dispatchEvent, matchKonamiCodeEvent);
-            });
+				// Assert.
+				sinon.assert.calledWith(document.dispatchEvent, matchKonamiCodeEvent);
+			});
 
-            // --------------------------------------------
+			// -----------------------------------------------------
 
-            it('but not when the user takes longer than the number of milliseconds specified by `options.allowedTimeBetweenKeys` to enter the next key in the Konami Code sequence (progress will be reset)', function (done)
-            {
-                // Act.
-                KoCo.addSupportForTheKonamiCode(
-                {
-                    allowedTimeBetweenKeys : 1000
-                });
+			it('but not when the user takes longer than the number of milliseconds specified by `options.allowedTimeBetweenKeys` to enter the next key in the Konami Code sequence (progress will be reset)', function (done)
+			{
+				// Act.
+				KoCo.addSupportForTheKonamiCode(
+				{
+					allowedTimeBetweenKeys : 1000
+				});
 
-                // Setup.
-                triggerKeyboardPress('ArrowUp');
-                triggerKeyboardPress('ArrowUp');
+				// Setup.
+				triggerKeyboardPress('ArrowUp');
+				triggerKeyboardPress('ArrowUp');
 
-                // Setup.
-                setTimeout(function ()
-                {
-                    triggerKeyboardPress('ArrowDown');
-                    triggerKeyboardPress('ArrowDown');
-                    triggerKeyboardPress('ArrowLeft');
-                    triggerKeyboardPress('ArrowRight');
-                    triggerKeyboardPress('ArrowLeft');
-                    triggerKeyboardPress('ArrowRight');
-                    triggerKeyboardPress('b');
-                    triggerKeyboardPress('a');
+				// Setup.
+				setTimeout(function ()
+				{
+					triggerKeyboardPress('ArrowDown');
+					triggerKeyboardPress('ArrowDown');
+					triggerKeyboardPress('ArrowLeft');
+					triggerKeyboardPress('ArrowRight');
+					triggerKeyboardPress('ArrowLeft');
+					triggerKeyboardPress('ArrowRight');
+					triggerKeyboardPress('b');
+					triggerKeyboardPress('a');
 
-                    // Assert.
-                    sinon.assert.neverCalledWith(document.dispatchEvent, matchKonamiCodeEvent);
+					// Assert.
+					sinon.assert.neverCalledWith(document.dispatchEvent, matchKonamiCodeEvent);
 
-                    // Setup.
-                    triggerKeyboardPress('ArrowUp');
-                    triggerKeyboardPress('ArrowUp');
-                    triggerKeyboardPress('ArrowDown');
-                    triggerKeyboardPress('ArrowDown');
-                    triggerKeyboardPress('ArrowLeft');
-                    triggerKeyboardPress('ArrowRight');
-                    triggerKeyboardPress('ArrowLeft');
-                    triggerKeyboardPress('ArrowRight');
-                    triggerKeyboardPress('b');
-                    triggerKeyboardPress('a');
+					// Setup.
+					triggerKeyboardPress('ArrowUp');
+					triggerKeyboardPress('ArrowUp');
+					triggerKeyboardPress('ArrowDown');
+					triggerKeyboardPress('ArrowDown');
+					triggerKeyboardPress('ArrowLeft');
+					triggerKeyboardPress('ArrowRight');
+					triggerKeyboardPress('ArrowLeft');
+					triggerKeyboardPress('ArrowRight');
+					triggerKeyboardPress('b');
+					triggerKeyboardPress('a');
 
-                    // Assert.
-                    sinon.assert.calledWith(document.dispatchEvent, matchKonamiCodeEvent);
+					// Assert.
+					sinon.assert.calledWith(document.dispatchEvent, matchKonamiCodeEvent);
 
-                    done();
+					done();
 
-                }, 1500);
-            });
-        });
-    });
+				}, 1500);
+			});
+		});
+	});
 });

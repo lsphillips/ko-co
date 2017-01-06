@@ -34,24 +34,24 @@ const KONAMI_CODE_SEQUENCE = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'A
  */
 function triggerEvent (target, type, detail = {})
 {
-    let event;
+	let event;
 
-    if (typeof window.CustomEvent === 'function')
-    {
-        event = new window.CustomEvent(type,
-        {
-            detail, bubbles : true
-        });
-    }
-    else
-    {
-        event = document.createEvent('CustomEvent');
+	if (typeof window.CustomEvent === 'function')
+	{
+		event = new window.CustomEvent(type,
+		{
+			detail, bubbles : true
+		});
+	}
+	else
+	{
+		event = document.createEvent('CustomEvent');
 
-        // Initialize the old fashioned way.
-        event.initCustomEvent(type, true, false, detail);
-    }
+		// Initialize the old fashioned way.
+		event.initCustomEvent(type, true, false, detail);
+	}
 
-    target.dispatchEvent(event);
+	target.dispatchEvent(event);
 }
 
 // --------------------------------------------------------
@@ -89,55 +89,55 @@ function triggerEvent (target, type, detail = {})
  */
 function addSupportForTheKonamiCode (options = {})
 {
-    let timer = null, progress = 0, { requireEnterPress = false, allowedTimeBetweenKeys = 0 } = options;
+	let timer = null, progress = 0, { requireEnterPress = false, allowedTimeBetweenKeys = 0 } = options;
 
-    // Add the `Enter` key code to the sequence if it is
-    // configured.
-    let sequence = requireEnterPress ? [...KONAMI_CODE_SEQUENCE, 'Enter'] : KONAMI_CODE_SEQUENCE;
+	// Add the `Enter` key code to the sequence if it is
+	// configured.
+	let sequence = requireEnterPress ? [...KONAMI_CODE_SEQUENCE, 'Enter'] : KONAMI_CODE_SEQUENCE;
 
-    // Listen.
-    document.addEventListener('keydown', function (event)
-    {
-        timer && clearTimeout(timer);
+	// Listen.
+	document.addEventListener('keydown', function (event)
+	{
+		timer && clearTimeout(timer);
 
-        // When the key does not match the next key required
-        // in the sequence, just reset sequence progress and
-        // stop.
-        if (sequence[progress] !== event.key)
-        {
-            timer = null; progress = 0;
+		// When the key does not match the next key required
+		// in the sequence, just reset sequence progress and
+		// stop.
+		if (sequence[progress] !== event.key)
+		{
+			timer = null; progress = 0;
 
-            return;
-        }
+			return;
+		}
 
-        ++progress;
+		++progress;
 
-        // When we have reached the end of the sequence,
-        // reset and trigger an event.
-        if (sequence.length === progress)
-        {
-            timer = null; progress = 0;
+		// When we have reached the end of the sequence,
+		// reset and trigger an event.
+		if (sequence.length === progress)
+		{
+			timer = null; progress = 0;
 
-            triggerEvent(event.target, 'konamicode',
-            {
-            });
+			triggerEvent(event.target, 'konamicode',
+			{
+			});
 
-            return;
-        }
+			return;
+		}
 
-        // When configured, create a timer that will reset
-        // the sequence progress if the user takes too long
-        // to enter the next key in the sequence.
-        if (allowedTimeBetweenKeys > 0)
-        {
-            timer = setTimeout(function ()
-            {
-                timer = null; progress = 0;
+		// When configured, create a timer that will reset
+		// the sequence progress if the user takes too long
+		// to enter the next key in the sequence.
+		if (allowedTimeBetweenKeys > 0)
+		{
+			timer = setTimeout(function ()
+			{
+				timer = null; progress = 0;
 
-            }, allowedTimeBetweenKeys);
-        }
+			}, allowedTimeBetweenKeys);
+		}
 
-    }, true);
+	}, true);
 }
 
 // --------------------------------------------------------
