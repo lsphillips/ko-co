@@ -63,10 +63,10 @@ npm install ko-co
 
 ## Development
 
-This project doesn't have much of a build process. It does have tests though; which you can run through NPM like so:
+This project doesn't have much of a build process. It does have tests though; which you can run with Grunt like so:
 
 ``` sh
-npm test
+grunt test
 ```
 
 This also runs code quality checks using ESLint. Please refer to the `.eslintrc` file to familiar yourself with the rules.
