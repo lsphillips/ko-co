@@ -87,10 +87,10 @@ function triggerEvent (target, type, detail = {})
  *
  * @memberof KoCo
  */
-function addSupportForTheKonamiCode (options = {})
+function addSupportForTheKonamiCode ({ requireEnterPress = false, allowedTimeBetweenKeys = 0 } = {})
 {
-	let timer = null, progress = 0, { requireEnterPress = false, allowedTimeBetweenKeys = 0 } = options;
-
+	let timer = null, progress = 0;
+	
 	// Add the `Enter` key code to the sequence if it is
 	// configured.
 	let sequence = requireEnterPress ? [...KONAMI_CODE_SEQUENCE, 'Enter'] : KONAMI_CODE_SEQUENCE;

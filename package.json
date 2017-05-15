@@ -1,7 +1,7 @@
 {
 	"name" : "ko-co",
 
-	"version" : "0.1.0",
+	"version" : "0.1.1",
 
 	"description" : "Adds support for the Konami Code; making your website automatically cool.",
 
@@ -52,5 +52,7 @@
 	"engines" :
 	{
 		"node" : ">=6.0.0"
-	}
+	},
+
+	"types" : "KoCo.d.ts"
 }
