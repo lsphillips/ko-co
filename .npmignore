@@ -5,6 +5,11 @@
 .eslintrc
 .gitignore
 
+# Grunt
+# -----------------
+
+Gruntfile.js
+
 # File Types
 # -----------------
 
