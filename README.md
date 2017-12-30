@@ -59,17 +59,17 @@ This project is available through the Node Package Manager (NPM), so you can ins
 npm install ko-co
 ```
 
-**Please Note:** Versions of Node lower than v6.0.0 are not supported, this is because it is written using ECMAScript 6 features.
+This is a `commonjs` module; so you will need to use a bundler.
 
 ## Development
 
-This project doesn't have much of a build process. It does have tests though; which you can run with Grunt like so:
+This project doesn't have much of a build process. It does have tests though; which you can run like so:
 
 ``` sh
-grunt test
+npm test
 ```
 
-This also runs code quality checks using ESLint. Please refer to the `.eslintrc` file to familiar yourself with the rules.
+This also runs code quality checks using ESLint. Please refer to the `.eslintrc` files to familiar yourself with the rules.
 
 ## License
 

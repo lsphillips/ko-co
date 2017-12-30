@@ -1,9 +1,6 @@
-// Type definitions for KoCo
-// --------------------------------------------------------
-
 export interface KonamiCodeOptions
 {
-	requireEnterPress?      : boolean;
+	requireEnterPress? : boolean;
 	allowedTimeBetweenKeys? : number;
 }
 
