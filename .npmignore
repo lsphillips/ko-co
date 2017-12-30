@@ -1,24 +1,8 @@
 # Files
 # -----------------
 
-.DS_Store
 .eslintrc
 .gitignore
-
-# Grunt
-# -----------------
-
-Gruntfile.js
-
-# File Types
-# -----------------
-
-*.db
-*.log
-*.zip
-*.iml
-*.sublime-*
-*.log.*
 
 # Directories
 # -----------------
