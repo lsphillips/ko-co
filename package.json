@@ -47,7 +47,7 @@
 	"scripts" :
 	{
 		"lint" : "node_modules/.bin/eslint 'src/**/*.js' 'tests/**/*.js'",
-		"unit" : "node_modules/.bin/mocha 'tests/**/*.js'",
+		"unit" : "node_modules/.bin/mocha --timeout 5000 'tests/**/*.js'",
 		"test" : "npm run lint && npm run unit"
 	},
 
