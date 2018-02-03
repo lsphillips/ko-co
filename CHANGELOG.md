@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Changed
 
-- `KoCo.addSupportForTheKonamiCode()` now returns a function that will remove support for the Konami Code when called.
+- Updated `KoCo.addSupportForTheKonamiCode()` to return a function that will remove support for the Konami Code.
 
 ## [1.1.0] (2018-01-02)
 
