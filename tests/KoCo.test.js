@@ -37,7 +37,7 @@ describe('KoCo', function ()
 
 	beforeEach(function ()
 	{
-		onKonamiCode.reset();
+		onKonamiCode.resetHistory();
 	});
 
 	afterEach(function ()
@@ -49,7 +49,23 @@ describe('KoCo', function ()
 	{
 		it('shall enable the `konamicode` event to be emitted every time the Konami Code sequence is entered correctly', function ()
 		{
+			// Setup.
 			removeSupportForTheKonamiCode = KoCo.addSupportForTheKonamiCode();
+
+			// Act.
+			performKeyPress('ArrowUp');
+			performKeyPress('ArrowUp');
+			performKeyPress('ArrowDown');
+			performKeyPress('ArrowDown');
+			performKeyPress('ArrowLeft');
+			performKeyPress('ArrowRight');
+			performKeyPress('ArrowLeft');
+			performKeyPress('ArrowRight');
+			performKeyPress('b');
+			performKeyPress('a');
+
+			// Assert.
+			assert.calledWith(onKonamiCode, matchKonamiCodeEvent());
 
 			// Act.
 			performKeyPress('ArrowUp');
@@ -69,8 +85,8 @@ describe('KoCo', function ()
 
 		it('shall enable the `konamicode` event to be emitted by the element that the user used to enter the Konami Code', function ()
 		{
+			// Setup.
 			let anExampleInput = document.createElement('input');
-
 			document.body.appendChild(anExampleInput);
 
 			// Setup.
@@ -94,7 +110,7 @@ describe('KoCo', function ()
 			}));
 		});
 
-		it('shall enable the `konamicode` event to be emitted every time the Konami Code sequence followed by the Enter key is entered when `options.requireEnterPress` is `true`', function ()
+		it('shall enable the `konamicode` event to be emitted every time the Konami Code sequence is entered followed by the Enter key when `options.requireEnterPress` is `true`', function ()
 		{
 			// Setup.
 			removeSupportForTheKonamiCode = KoCo.addSupportForTheKonamiCode({
@@ -116,7 +132,7 @@ describe('KoCo', function ()
 			// Assert.
 			assert.notCalled(onKonamiCode);
 
-			// Setup.
+			// Act.
 			performKeyPress('Enter');
 
 			// Assert.
