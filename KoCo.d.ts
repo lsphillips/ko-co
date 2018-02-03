@@ -6,11 +6,11 @@ export interface KonamiCodeOptions
 
 // --------------------------------------------------------
 
-export interface RemoveSupportForTheKonamiCode
+export interface KonamiCodeSupportRemover
 {
 	() : void
 }
 
 // --------------------------------------------------------
 
-export function addSupportForTheKonamiCode(options? : KonamiCodeOptions) : RemoveSupportForTheKonamiCode;
+export function addSupportForTheKonamiCode(options? : KonamiCodeOptions) : KonamiCodeSupportRemover;
