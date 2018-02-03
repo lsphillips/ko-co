@@ -93,6 +93,8 @@ function triggerEvent (target, type, detail = {})
  * @param {Number}  [options.allowedTimeBetweenKeys]    Determines the maximum allowed time (in milliseconds) between key presses before sequence progress is reset. By default the user can take as long as they want.
  * @param {Boolean} [options.requireEnterPress = false] Determines whether the user needs to press enter before the Konami Code is triggered.
  *
+ * @returns {Function} A function that will remove support for the Konami Code.
+ *
  * @memberof KoCo
  */
 function addSupportForTheKonamiCode ({ requireEnterPress = false, allowedTimeBetweenKeys = 0 } = {})
@@ -104,7 +106,7 @@ function addSupportForTheKonamiCode ({ requireEnterPress = false, allowedTimeBet
 		sequence = [...KONAMI_CODE_SEQUENCE, 'Enter'];
 	}
 
-	document.addEventListener('keydown', function konamiCodeSequenceListener (event)
+	function konamiCodeSequenceListener (event)
 	{
 		if (timer)
 		{
@@ -141,8 +143,15 @@ function addSupportForTheKonamiCode ({ requireEnterPress = false, allowedTimeBet
 
 			}, allowedTimeBetweenKeys);
 		}
+	}
 
-	}, true);
+	// Listen.
+	document.addEventListener('keydown', konamiCodeSequenceListener, true);
+
+	return function removeSupportForTheKonamiCode ()
+	{
+		document.removeEventListener('keydown', konamiCodeSequenceListener, true);
+	};
 }
 
 // --------------------------------------------------------

@@ -25,9 +25,9 @@ KoCo takes a different approach to already existing Konami Code libraries. It ut
 To add Konami Code support you just need to call the `addSupportForTheKonamiCode()` method, most likely in your application entry point. For example:
 
 ``` js
-require('ko-co').addSupportForTheKonamiCode(
+KoCo.addSupportForTheKonamiCode(
 {
-    requireEnterPress : true
+    // Options...
 });
 ```
 
@@ -50,6 +50,19 @@ anEventTarget.addEventListener('konamicode', function ()
 ```
 
 The `konamicode` event bubbles, so event delegation works as expected.
+
+### Restoring
+
+If you want to remove support for the Konami Code completely, `KoCo.addSupportForTheKonamiCode()` will return a function that will do that for you:
+
+``` js
+let makeMyWebsiteBoringAgain = KoCo.addSupportForTheKonamiCode(
+{
+    // Options...
+});
+
+makeMyWebsiteBoringAgain();
+```
 
 ## Getting started
 

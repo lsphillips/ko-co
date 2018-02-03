@@ -1,11 +1,15 @@
+# Environment
+# -------------------------------------
+
+dist: trusty
+addons:
+    chrome: stable
+
 # Build
 # -------------------------------------
 
 language: node_js
 node_js:
-    - "6"
-    - "7"
-    - "8"
     - "9"
 
 # Deployment
