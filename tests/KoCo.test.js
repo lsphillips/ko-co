@@ -66,21 +66,6 @@ describe('KoCo', function ()
 
 			// Assert.
 			assert.calledWith(onKonamiCode, matchKonamiCodeEvent());
-
-			// Act.
-			performKeyPress('ArrowUp');
-			performKeyPress('ArrowUp');
-			performKeyPress('ArrowDown');
-			performKeyPress('ArrowDown');
-			performKeyPress('ArrowLeft');
-			performKeyPress('ArrowRight');
-			performKeyPress('ArrowLeft');
-			performKeyPress('ArrowRight');
-			performKeyPress('b');
-			performKeyPress('a');
-
-			// Assert.
-			assert.calledWith(onKonamiCode, matchKonamiCodeEvent());
 		});
 
 		it('shall enable the `konamicode` event to be emitted by the element that the user used to enter the Konami Code', function ()
