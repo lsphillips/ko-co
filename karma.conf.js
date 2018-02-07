@@ -19,7 +19,8 @@ module.exports = function (config)
 
 		browsers :
 		[
-			'ChromeHeadless'
+			'ChromeHeadless',
+			'FirefoxHeadless'
 		],
 
 		preprocessors :

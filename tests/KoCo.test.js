@@ -6,14 +6,10 @@
 const { assert, spy } = require('sinon');
 const delay           = require('timeout-as-promise');
 
-// Helpers
+// Helpers & Matchers
 // --------------------------------------------------------
 
-const performKeyPress = require('./helpers/performKeyPress');
-
-// Matchers
-// --------------------------------------------------------
-
+const performKeyPress      = require('./support/performKeyPress');
 const matchKonamiCodeEvent = require('./matchers/matchKonamiCodeEvent');
 
 // Subjects
@@ -33,6 +29,11 @@ describe('KoCo', function ()
 
 		// Listen.
 		document.addEventListener('konamicode', onKonamiCode, false);
+
+		// Inject.
+		document.body.innerHTML = `
+			<input type="text" />
+		`;
 	});
 
 	beforeEach(function ()
@@ -62,6 +63,11 @@ describe('KoCo', function ()
 			performKeyPress('ArrowLeft');
 			performKeyPress('ArrowRight');
 			performKeyPress('b');
+
+			// Assert.
+			assert.notCalled(onKonamiCode);
+
+			// Act.
 			performKeyPress('a');
 
 			// Assert.
@@ -70,28 +76,26 @@ describe('KoCo', function ()
 
 		it('shall enable the `konamicode` event to be emitted by the element that the user used to enter the Konami Code', function ()
 		{
-			// Setup.
-			let anExampleInput = document.createElement('input');
-			document.body.appendChild(anExampleInput);
+			let textField = document.querySelector('input');
 
 			// Setup.
 			removeSupportForTheKonamiCode = KoCo.addSupportForTheKonamiCode();
 
 			// Act.
-			performKeyPress('ArrowUp',    anExampleInput);
-			performKeyPress('ArrowUp',    anExampleInput);
-			performKeyPress('ArrowDown',  anExampleInput);
-			performKeyPress('ArrowDown',  anExampleInput);
-			performKeyPress('ArrowLeft',  anExampleInput);
-			performKeyPress('ArrowRight', anExampleInput);
-			performKeyPress('ArrowLeft',  anExampleInput);
-			performKeyPress('ArrowRight', anExampleInput);
-			performKeyPress('b',          anExampleInput);
-			performKeyPress('a',          anExampleInput);
+			performKeyPress('ArrowUp',    textField);
+			performKeyPress('ArrowUp',    textField);
+			performKeyPress('ArrowDown',  textField);
+			performKeyPress('ArrowDown',  textField);
+			performKeyPress('ArrowLeft',  textField);
+			performKeyPress('ArrowRight', textField);
+			performKeyPress('ArrowLeft',  textField);
+			performKeyPress('ArrowRight', textField);
+			performKeyPress('b',          textField);
+			performKeyPress('a',          textField);
 
 			// Assert.
 			assert.calledWith(onKonamiCode, matchKonamiCodeEvent({
-				dispatchBy : anExampleInput
+				dispatchBy : textField
 			}));
 		});
 
