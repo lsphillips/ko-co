@@ -14,14 +14,14 @@
  * @memberof KoCo
  */
 const KONAMI_CODE_SEQUENCE = [
-	'ArrowUp',
-	'ArrowUp',
-	'ArrowDown',
-	'ArrowDown',
-	'ArrowLeft',
-	'ArrowRight',
-	'ArrowLeft',
-	'ArrowRight',
+	'arrowup',
+	'arrowup',
+	'arrowdown',
+	'arrowdown',
+	'arrowleft',
+	'arrowright',
+	'arrowleft',
+	'arrowright',
 	'b',
 	'a'
 ];
@@ -103,7 +103,7 @@ function addSupportForTheKonamiCode ({ requireEnterPress = false, allowedTimeBet
 
 	if (requireEnterPress)
 	{
-		sequence = [...KONAMI_CODE_SEQUENCE, 'Enter'];
+		sequence = [...KONAMI_CODE_SEQUENCE, 'enter'];
 	}
 
 	function konamiCodeSequenceListener (event)
@@ -113,7 +113,7 @@ function addSupportForTheKonamiCode ({ requireEnterPress = false, allowedTimeBet
 			clearTimeout(timer);
 		}
 
-		if (sequence[progress] !== event.key)
+		if (sequence[progress] !== event.key.toLowerCase())
 		{
 			timer    = null;
 			progress = 0;

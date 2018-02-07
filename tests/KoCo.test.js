@@ -63,12 +63,28 @@ describe('KoCo', function ()
 			performKeyPress('ArrowLeft');
 			performKeyPress('ArrowRight');
 			performKeyPress('b');
+			performKeyPress('a');
 
 			// Assert.
-			assert.notCalled(onKonamiCode);
+			assert.calledWith(onKonamiCode, matchKonamiCodeEvent());
+		});
+
+		it('shall enable the `konamicode` event to even be emitted when the user has their caps lock enabled', function ()
+		{
+			// Setup.
+			removeSupportForTheKonamiCode = KoCo.addSupportForTheKonamiCode();
 
 			// Act.
-			performKeyPress('a');
+			performKeyPress('ArrowUp');
+			performKeyPress('ArrowUp');
+			performKeyPress('ArrowDown');
+			performKeyPress('ArrowDown');
+			performKeyPress('ArrowLeft');
+			performKeyPress('ArrowRight');
+			performKeyPress('ArrowLeft');
+			performKeyPress('ArrowRight');
+			performKeyPress('B');
+			performKeyPress('A');
 
 			// Assert.
 			assert.calledWith(onKonamiCode, matchKonamiCodeEvent());

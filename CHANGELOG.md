@@ -2,6 +2,12 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] (2018-02-07)
+
+### Fixed
+
+- The `konamicode` event now fires even when the user has their caps lock enabled.
+
 ## [1.2.0] (2018-01-31)
 
 ### Changed
