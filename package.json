@@ -27,16 +27,16 @@
 
 	"devDependencies" :
 	{
-		"browserify" : "15.2.0",
-		"mocha" : "5.0.0",
-		"sinon" : "4.2.2",
-		"eslint" : "4.17.0",
-		"eslint-plugin-import" : "2.8.0",
-		"eslint-plugin-promise" : "3.6.0",
-		"eslint-config-protect-me-from-my-stupidity" : "~2.0.4",
-		"karma" : "2.0.0",
+		"browserify" : "16.2.0",
+		"mocha" : "5.1.1",
+		"sinon" : "5.0.1",
+		"eslint" : "4.19.1",
+		"eslint-plugin-import" : "2.11.0",
+		"eslint-plugin-promise" : "3.7.0",
+		"eslint-config-protect-me-from-my-stupidity" : "~2.1.0",
+		"karma" : "2.0.2",
 		"karma-mocha" : "1.3.0",
-		"karma-browserify" : "5.1.3",
+		"karma-browserify" : "5.2.0",
 		"karma-chrome-launcher" : "2.2.0",
 		"karma-firefox-launcher" : "1.1.0",
 		"timeout-as-promise" : "1.0.0"
