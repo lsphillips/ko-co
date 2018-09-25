@@ -14,7 +14,8 @@ module.exports = function (config)
 		frameworks :
 		[
 			'browserify',
-			'mocha'
+			'mocha',
+			'source-map-support'
 		],
 
 		browsers :
