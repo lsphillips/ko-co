@@ -1,11 +1,10 @@
 'use strict';
 
-// Dependencies
-// --------------------------------------------------------
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 const { match } = require('sinon');
 
-// --------------------------------------------------------
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 module.exports = function matchKonamiCodeEvent ({ dispatchBy = document } = {})
 {

@@ -35,21 +35,21 @@ KoCo.addSupportForTheKonamiCode(
 
 You can pass some options to control how the Konami Code sequence is detected:
 
-- `requireEnterPress` - Determines whether the user needs to press enter before the Konami Code is triggered. Defaults to `false`.
-- `allowedTimeBetweenKeys` - Determines the maximum allowed time (in milliseconds) between key presses before sequence progress is reset. By default the user can take as long as they want.
+- `requireEnterPress` - Determines whether the enter key is required to conclude a Konami Code sequence. Defaults to `false`.
+- `allowedTimeBetweenKeys` - The maximum amount of time (in milliseconds) to wait between key presses before sequence progress is reset. By default the user can take as long as they want.
 
 ### Listening
 
-Listening for the Konami Code is as simple as listening for native DOM events:
+Listening for the Konami Code is just like listening to regular DOM events:
 
 ``` js
-anEventTarget.addEventListener('konamicode', function ()
+target.addEventListener('konamicode', () =>
 {
     console.log('The Konami Code has been entered. 30 more lives for you!');
 });
 ```
 
-The `konamicode` event bubbles, so event delegation works as expected.
+The `konamicode` event bubbles and is cancelable, so event delegation works as expected.
 
 ### Restoring
 

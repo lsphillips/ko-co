@@ -1,23 +1,14 @@
 'use strict';
 
-// Dependencies
-// --------------------------------------------------------
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const { assert, spy } = require('sinon');
-const delay           = require('timeout-as-promise');
-
-// Helpers & Matchers
-// --------------------------------------------------------
-
+const { assert, spy }      = require('sinon');
+const delay                = require('timeout-as-promise');
 const performKeyPress      = require('./support/performKeyPress');
 const matchKonamiCodeEvent = require('./matchers/matchKonamiCodeEvent');
+const KoCo                 = require('../src/KoCo');
 
-// Subjects
-// --------------------------------------------------------
-
-const KoCo = require('../src/KoCo');
-
-// --------------------------------------------------------
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 describe('KoCo', function ()
 {
