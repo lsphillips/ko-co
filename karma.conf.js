@@ -1,8 +1,12 @@
 'use strict';
 
-// --------------------------------------------------------
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-module.exports = function (config)
+const build = require('./rollup.config');
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+module.exports = function test (config)
 {
 	config.set(
 	{
@@ -13,9 +17,7 @@ module.exports = function (config)
 
 		frameworks :
 		[
-			'browserify',
-			'mocha',
-			'source-map-support'
+			'mocha'
 		],
 
 		browsers :
@@ -26,12 +28,16 @@ module.exports = function (config)
 
 		preprocessors :
 		{
-			'tests/KoCo.test.js' : ['browserify']
+			'tests/KoCo.test.js' : ['rollup']
 		},
 
 		client :
 		{
 			mocha : { timeout : 5000 }
-		}
+		},
+
+		rollupPreprocessor : build({
+			forTest : true
+		})
 	});
 };
