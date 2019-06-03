@@ -11,40 +11,32 @@ const { uglify } = require('rollup-plugin-uglify');
 
 module.exports = function build ({
 	forTest = false
-})
+} = {})
 {
+	const plugins =
+	[
+		commonjs(),
+		node()
+	];
+
 	if (forTest)
 	{
 		return {
-
-			plugins :
-			[
-				commonjs(),
-				node(),
-				buble({
-					transforms : {
-						asyncAwait : false
-					}
-				})
-			],
 
 			output :
 			{
 				format : 'iife',
 				name : 'tests',
 				sourcemap : 'inline'
-			}
+			},
+
+			plugins
 		};
 	}
 
 	return {
 
-		plugins :
-		[
-			commonjs(),
-			buble(),
-			uglify()
-		],
+		input : 'src/KoCo.js',
 
 		output :
 		{
@@ -54,6 +46,8 @@ module.exports = function build ({
 			exports : 'named'
 		},
 
-		input : 'src/KoCo.js'
+		plugins : [
+			...plugins, buble(), uglify()
+		]
 	};
 };

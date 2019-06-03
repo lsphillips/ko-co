@@ -2,24 +2,20 @@
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const { assert, spy }      = require('sinon');
-const delay                = require('timeout-as-promise');
-const performKeyPress      = require('./support/performKeyPress');
-const matchKonamiCodeEvent = require('./matchers/matchKonamiCodeEvent');
-const KoCo                 = require('../src/KoCo');
+const wait                    = require('timeout-as-promise');
+const performKeyPress         = require('../support/perform-key-press');
+const KonamiCodeEventCapturer = require('../support/konami-code-event-capturer');
+const KoCo                    = require('../../src/KoCo');
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 describe('KoCo', function ()
 {
-	let onKonamiCode, removeSupportForTheKonamiCode;
+	let capturer, removeSupportForTheKonamiCode;
 
 	before(function ()
 	{
-		onKonamiCode = spy();
-
-		// Listen.
-		document.addEventListener('konamicode', onKonamiCode, false);
+		capturer = new KonamiCodeEventCapturer();
 
 		// Inject.
 		document.body.innerHTML = `
@@ -29,11 +25,14 @@ describe('KoCo', function ()
 
 	beforeEach(function ()
 	{
-		onKonamiCode.resetHistory();
+		capturer.start();
 	});
 
 	afterEach(function ()
 	{
+		capturer.stop().reset();
+
+		// Clean up.
 		removeSupportForTheKonamiCode();
 	});
 
@@ -57,7 +56,7 @@ describe('KoCo', function ()
 			performKeyPress('a');
 
 			// Assert.
-			assert.calledWith(onKonamiCode, matchKonamiCodeEvent());
+			capturer.hasCapturedEvent();
 		});
 
 		it('shall enable the `konamicode` event to even be emitted when the user has their caps lock enabled', function ()
@@ -78,7 +77,7 @@ describe('KoCo', function ()
 			performKeyPress('A');
 
 			// Assert.
-			assert.calledWith(onKonamiCode, matchKonamiCodeEvent());
+			capturer.hasCapturedEvent();
 		});
 
 		it('shall enable the `konamicode` event to be emitted by the element that the user used to enter the Konami Code', function ()
@@ -101,9 +100,9 @@ describe('KoCo', function ()
 			performKeyPress('a',          textField);
 
 			// Assert.
-			assert.calledWith(onKonamiCode, matchKonamiCodeEvent({
-				dispatchBy : textField
-			}));
+			capturer.hasCapturedEvent({
+				dispatchedBy : textField
+			});
 		});
 
 		it('shall enable the `konamicode` event to be emitted every time the Konami Code sequence is entered followed by the Enter key when `options.requireEnterPress` is `true`', function ()
@@ -126,13 +125,13 @@ describe('KoCo', function ()
 			performKeyPress('a');
 
 			// Assert.
-			assert.notCalled(onKonamiCode);
+			capturer.hasNotCapturedEvent();
 
 			// Act.
 			performKeyPress('Enter');
 
 			// Assert.
-			assert.calledWith(onKonamiCode, matchKonamiCodeEvent());
+			capturer.hasCapturedEvent();
 		});
 
 		it('shall enable the `konamicode` event to even be emitted when the user takes a long time between any of the keys in the Konami Code sequence', async function ()
@@ -145,7 +144,7 @@ describe('KoCo', function ()
 			performKeyPress('ArrowUp');
 
 			// Wait.
-			await delay(4500);
+			await wait(4500);
 
 			// Act.
 			performKeyPress('ArrowDown');
@@ -158,7 +157,7 @@ describe('KoCo', function ()
 			performKeyPress('a');
 
 			// Assert.
-			assert.calledWith(onKonamiCode, matchKonamiCodeEvent());
+			capturer.hasCapturedEvent();
 		});
 
 		it('shall enable the `konamicode` event to only be emitted when the Konami Code sequence is not interrupted by an unexpected key (progress will be reset)', function ()
@@ -180,7 +179,7 @@ describe('KoCo', function ()
 			performKeyPress('a');
 
 			// Assert.
-			assert.notCalled(onKonamiCode);
+			capturer.hasNotCapturedEvent();
 
 			// Act.
 			performKeyPress('ArrowUp');
@@ -195,7 +194,7 @@ describe('KoCo', function ()
 			performKeyPress('a');
 
 			// Assert.
-			assert.calledWith(onKonamiCode, matchKonamiCodeEvent());
+			capturer.hasCapturedEvent();
 		});
 
 		it('shall enable the `konamicode` event to only be emitted when the user does not take any longer than the number of milliseconds specified by `options.allowedTimeBetweenKeys` between any of the keys in the Konami Code sequence (progress will be reset)', async function ()
@@ -210,7 +209,7 @@ describe('KoCo', function ()
 			performKeyPress('ArrowUp');
 
 			// Wait.
-			await delay(1500);
+			await wait(1500);
 
 			// Act.
 			performKeyPress('ArrowDown');
@@ -223,7 +222,7 @@ describe('KoCo', function ()
 			performKeyPress('a');
 
 			// Assert.
-			assert.notCalled(onKonamiCode);
+			capturer.hasNotCapturedEvent();
 
 			// Act.
 			performKeyPress('ArrowUp');
@@ -238,7 +237,7 @@ describe('KoCo', function ()
 			performKeyPress('a');
 
 			// Assert.
-			assert.calledWith(onKonamiCode, matchKonamiCodeEvent());
+			capturer.hasCapturedEvent();
 		});
 	});
 });

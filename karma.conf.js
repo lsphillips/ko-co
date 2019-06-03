@@ -12,10 +12,20 @@ module.exports = function test (config)
 	{
 		files :
 		[
-			'tests/KoCo.test.js'
+			'tests/specs/**/*.spec.js'
 		],
 
+		preprocessors :
+		{
+			'tests/**/*.js' : ['rollup']
+		},
+
 		frameworks :
+		[
+			'mocha'
+		],
+
+		reporters :
 		[
 			'mocha'
 		],
@@ -26,14 +36,19 @@ module.exports = function test (config)
 			'FirefoxHeadless'
 		],
 
-		preprocessors :
-		{
-			'tests/KoCo.test.js' : ['rollup']
-		},
+		concurrency : 1,
 
 		client :
 		{
-			mocha : { timeout : 5000 }
+			mocha :
+			{
+				timeout : 5000
+			}
+		},
+
+		mochaReporter :
+		{
+			showDiff : true
 		},
 
 		rollupPreprocessor : build({

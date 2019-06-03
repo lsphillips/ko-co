@@ -15,6 +15,8 @@ const KONAMI_CODE_SEQUENCE = [
 	'a'
 ];
 
+const KONAMI_CODE_SEQUENCE_WITH_ENTER = [...KONAMI_CODE_SEQUENCE, 'enter'];
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 function triggerEvent (target, type, detail = {})
@@ -48,7 +50,7 @@ function addSupportForTheKonamiCode ({
 
 	if (requireEnterPress)
 	{
-		sequence = [...KONAMI_CODE_SEQUENCE, 'enter'];
+		sequence = KONAMI_CODE_SEQUENCE_WITH_ENTER;
 	}
 
 	function konamiCodeSequenceListener (event)
