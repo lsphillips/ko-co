@@ -9,6 +9,16 @@ const { uglify } = require('rollup-plugin-uglify');
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+function ignoreCircularDependencyAndEvalWarnings (warning, next)
+{
+	if (warning.code !== 'CIRCULAR_DEPENDENCY' && warning.code !== 'EVAL')
+	{
+		next(warning);
+	}
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 module.exports = function build ({
 	forTest = false
 } = {})
@@ -22,6 +32,8 @@ module.exports = function build ({
 	if (forTest)
 	{
 		return {
+
+			onwarn : ignoreCircularDependencyAndEvalWarnings,
 
 			output :
 			{
