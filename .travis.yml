@@ -1,12 +1,6 @@
 dist: trusty
 addons:
   chrome: stable
-  firefox: latest
-sudo: required
-
 language: node_js
 node_js:
-  - "10"
-script:
-  - npm run test
-  - npm run build
+  - "12"
