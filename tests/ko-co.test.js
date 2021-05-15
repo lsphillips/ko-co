@@ -1,15 +1,11 @@
-'use strict';
+import wait                    from 'timeout-as-promise';
+import performKeyPress         from './support/perform-key-press.js';
+import KonamiCodeEventCapturer from './support/konami-code-event-capturer.js';
+import * as koco               from '../src/ko-co.js';
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-const wait                    = require('timeout-as-promise');
-const performKeyPress         = require('../support/perform-key-press');
-const KonamiCodeEventCapturer = require('../support/konami-code-event-capturer');
-const KoCo                    = require('../../src/KoCo');
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-describe('KoCo', function ()
+describe('koco', function ()
 {
 	let capturer, removeSupportForTheKonamiCode;
 
@@ -36,12 +32,12 @@ describe('KoCo', function ()
 		removeSupportForTheKonamiCode();
 	});
 
-	describe('.addSupportForTheKonamiCode(options)', function ()
+	describe('addSupportForTheKonamiCode(options)', function ()
 	{
 		it('shall enable the `konamicode` event to be emitted every time the Konami Code sequence is entered correctly', function ()
 		{
 			// Setup.
-			removeSupportForTheKonamiCode = KoCo.addSupportForTheKonamiCode();
+			removeSupportForTheKonamiCode = koco.addSupportForTheKonamiCode();
 
 			// Act.
 			performKeyPress('ArrowUp');
@@ -62,7 +58,7 @@ describe('KoCo', function ()
 		it('shall enable the `konamicode` event to even be emitted when the user has their caps lock enabled', function ()
 		{
 			// Setup.
-			removeSupportForTheKonamiCode = KoCo.addSupportForTheKonamiCode();
+			removeSupportForTheKonamiCode = koco.addSupportForTheKonamiCode();
 
 			// Act.
 			performKeyPress('ArrowUp');
@@ -85,7 +81,7 @@ describe('KoCo', function ()
 			let textField = document.querySelector('input');
 
 			// Setup.
-			removeSupportForTheKonamiCode = KoCo.addSupportForTheKonamiCode();
+			removeSupportForTheKonamiCode = koco.addSupportForTheKonamiCode();
 
 			// Act.
 			performKeyPress('ArrowUp',    textField);
@@ -108,7 +104,7 @@ describe('KoCo', function ()
 		it('shall enable the `konamicode` event to be emitted every time the Konami Code sequence is entered followed by the Enter key when `options.requireEnterPress` is `true`', function ()
 		{
 			// Setup.
-			removeSupportForTheKonamiCode = KoCo.addSupportForTheKonamiCode({
+			removeSupportForTheKonamiCode = koco.addSupportForTheKonamiCode({
 				requireEnterPress : true
 			});
 
@@ -137,7 +133,7 @@ describe('KoCo', function ()
 		it('shall enable the `konamicode` event to even be emitted when the user takes a long time between any of the keys in the Konami Code sequence', async function ()
 		{
 			// Setup.
-			removeSupportForTheKonamiCode = KoCo.addSupportForTheKonamiCode();
+			removeSupportForTheKonamiCode = koco.addSupportForTheKonamiCode();
 
 			// Act.
 			performKeyPress('ArrowUp');
@@ -163,7 +159,7 @@ describe('KoCo', function ()
 		it('shall enable the `konamicode` event to only be emitted when the Konami Code sequence is not interrupted by an unexpected key (progress will be reset)', function ()
 		{
 			// Setup.
-			removeSupportForTheKonamiCode = KoCo.addSupportForTheKonamiCode();
+			removeSupportForTheKonamiCode = koco.addSupportForTheKonamiCode();
 
 			// Act.
 			performKeyPress('ArrowUp');
@@ -200,7 +196,7 @@ describe('KoCo', function ()
 		it('shall enable the `konamicode` event to only be emitted when the user does not take any longer than the number of milliseconds specified by `options.allowedTimeBetweenKeys` between any of the keys in the Konami Code sequence (progress will be reset)', async function ()
 		{
 			// Setup.
-			removeSupportForTheKonamiCode = KoCo.addSupportForTheKonamiCode({
+			removeSupportForTheKonamiCode = koco.addSupportForTheKonamiCode({
 				allowedTimeBetweenKeys : 1000
 			});
 

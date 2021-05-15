@@ -1,8 +1,4 @@
-'use strict';
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-const { assert, spy } = require('sinon');
+import sinon from 'sinon';
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -10,16 +6,14 @@ const KONAMI_CODE_EVENT_NAME = 'konamicode';
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-module.exports = class KonamiCodeEventCapturer
+export default class KonamiCodeEventCapturer
 {
 	constructor ()
 	{
 		Object.defineProperty(this, 'handler', {
-			value : spy()
+			value : sinon.spy()
 		});
 	}
-
-	// - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	start ()
 	{
@@ -42,18 +36,16 @@ module.exports = class KonamiCodeEventCapturer
 		return this;
 	}
 
-	// - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 	hasCapturedEvent ({
 		dispatchedBy = document
 	} = {})
 	{
-		assert.calledWithMatch(this.handler, event =>
+		sinon.assert.calledWithMatch(this.handler, event =>
 		{
 			const { type, bubbles, cancelable, target } = event;
 
 			// 1. The event must be a custom event.
-			// 2. The event type must be `konamicode`.
+			// 2. The event type must be correct.
 			// 3. The event must bubble.
 			// 4. The event must be cancelable.
 			// 5. The event must have been dispatched by
@@ -68,6 +60,6 @@ module.exports = class KonamiCodeEventCapturer
 
 	hasNotCapturedEvent ()
 	{
-		assert.notCalled(this.handler);
+		sinon.assert.notCalled(this.handler);
 	}
-};
+}

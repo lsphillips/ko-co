@@ -2,6 +2,17 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] (2021-05-15)
+
+### Added
+
+- Introduced an ESM version of this module that will be used when being imported using `import`.
+
+### Updated
+
+- This module is now transpiled using Babel.
+- The UMD version of this module now exposes itself using the name `koco` instead of `KoCo`.
+
 ## [1.4.0] (2019-04-30)
 
 ### Added

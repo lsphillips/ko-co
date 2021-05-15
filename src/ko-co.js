@@ -1,7 +1,3 @@
-'use strict';
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 const KONAMI_CODE_SEQUENCE = [
 	'arrowup',
 	'arrowup',
@@ -42,7 +38,7 @@ function triggerEvent (target, type, detail = {})
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-function addSupportForTheKonamiCode ({
+export function addSupportForTheKonamiCode ({
 	requireEnterPress = false, allowedTimeBetweenKeys = 0
 } = {})
 {
@@ -99,7 +95,3 @@ function addSupportForTheKonamiCode ({
 		document.removeEventListener('keydown', konamiCodeSequenceListener, true);
 	};
 }
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-module.exports = { addSupportForTheKonamiCode };

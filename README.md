@@ -20,12 +20,28 @@ KoCo takes a different approach to already existing Konami Code libraries. It ut
 - It allows control over what elements the user can use to trigger a Konami Code easter egg. You just register the listener to specific elements.
 - It is easy to stop listening when your application needs to get serious for a moment.
 
+This module can be treated as an ES module:
+
+``` js
+import * as koco from 'ko-co';
+// or
+import { addSupportForTheKonamiCode } from 'ko-co';
+```
+
+This module can also be treated as a CommonJS module:
+
+``` js
+const koco = require('ko-co');
+// or
+const { addSupportForTheKonamiCode } = require('ko-co');
+```
+
 ### Initializing
 
 To add Konami Code support you just need to call the `addSupportForTheKonamiCode()` method, most likely in your application entry point. For example:
 
 ``` js
-KoCo.addSupportForTheKonamiCode(
+koco.addSupportForTheKonamiCode(
 {
     // Options...
 });
@@ -56,7 +72,7 @@ The `konamicode` event bubbles and is cancelable, so event delegation works as e
 If you want to remove support for the Konami Code completely, `KoCo.addSupportForTheKonamiCode()` will return a function that will do that for you:
 
 ``` js
-let makeMyWebsiteBoringAgain = KoCo.addSupportForTheKonamiCode(
+let makeMyWebsiteBoringAgain = koco.addSupportForTheKonamiCode(
 {
     // Options...
 });
@@ -76,7 +92,7 @@ npm install ko-co
 
 ### Building
 
-You can build a browser entry point that is ES5 compatible and minified:
+You can build UMD and ESM versions of this module that are both ES5 compatible and minified:
 
 ``` sh
 npm run build
@@ -87,7 +103,7 @@ npm run build
 This module also has a robust test suite:
 
 ``` sh
-npm run test
+npm test
 ```
 
 This includes a code quality check using ESLint. Please refer to the `.eslintrc` files to familiar yourself with the rules.

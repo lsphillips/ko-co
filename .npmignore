@@ -11,14 +11,11 @@
 
 .travis.yml
 
-# Karma
+# Configuration
 # -----------------
 
 karma.conf.js
-
-# Rollup
-# -----------------
-
+babel.config.js
 rollup.config.js
 
 # Directories

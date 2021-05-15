@@ -1,8 +1,4 @@
-'use strict';
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-module.exports = function performKeyPress (key, element = document)
+export default function performKeyPress (key, element = document)
 {
 	element.dispatchEvent(
 		new KeyboardEvent('keydown', {
@@ -15,4 +11,4 @@ module.exports = function performKeyPress (key, element = document)
 			key
 		})
 	);
-};
+}
