@@ -14,9 +14,9 @@
 # Configuration
 # -----------------
 
-karma.conf.js
-babel.config.js
-rollup.config.js
+karma.conf.cjs
+babel.config.cjs
+rollup.config.cjs
 
 # Directories
 # -----------------
