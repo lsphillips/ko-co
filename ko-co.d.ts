@@ -32,7 +32,7 @@ export interface KonamiCodeSupportRemover
  * Example usage:
  *
  * ``` js
- * addSupportForTheKonamiCode(
+ * koco.addSupportForTheKonamiCode(
  * {
  *     allowedTimeBetweenKeys : 500
  * });
