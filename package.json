@@ -1,7 +1,7 @@
 {
     "name" : "ko-co",
 
-    "version" : "1.5.0",
+    "version" : "1.5.1",
 
     "type" : "module",
 
@@ -58,6 +58,16 @@
         "require" : "./ko-co.cjs",
         "default" : "./ko-co.cjs"
     },
+
+    "files" :
+    [
+        "/README.md",
+        "/CHANGELOG.md",
+        "/LICENSE.txt",
+        "/ko-co.js",
+        "/ko-co.cjs",
+        "/ko-co.d.ts"
+    ],
 
     "repository" :
     {
