@@ -1,4 +1,4 @@
-import sinon from 'sinon';
+import { spy, assert } from 'sinon';
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -11,7 +11,7 @@ export default class KonamiCodeEventCapturer
 	constructor ()
 	{
 		Object.defineProperty(this, 'handler', {
-			value : sinon.spy()
+			value : spy()
 		});
 	}
 
@@ -40,7 +40,7 @@ export default class KonamiCodeEventCapturer
 		dispatchedBy = document
 	} = {})
 	{
-		sinon.assert.calledWithMatch(this.handler, event =>
+		assert.calledWithMatch(this.handler, event =>
 		{
 			const { type, bubbles, cancelable, target } = event;
 
@@ -60,6 +60,6 @@ export default class KonamiCodeEventCapturer
 
 	hasNotCapturedEvent ()
 	{
-		sinon.assert.notCalled(this.handler);
+		assert.notCalled(this.handler);
 	}
 }
