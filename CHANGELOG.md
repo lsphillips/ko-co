@@ -29,7 +29,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Added
 
-- Introduced documentation to the Typescript type definitons.
+- Introduced documentation to the Typescript type definitions.
 
 ## 1.2.1 - 2018-02-07
 
