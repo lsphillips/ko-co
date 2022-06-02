@@ -14,7 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 - Introduced an ESM version of this module that will be used when being imported using `import`.
 
-### Updated
+### Changed
 
 - This module is now transpiled using Babel.
 - The UMD version of this module now exposes itself using the name `koco` instead of `KoCo`.
