@@ -34,7 +34,7 @@
         "@rollup/plugin-node-resolve" : "15.2.3",
         "@rollup/plugin-commonjs" : "25.0.7",
         "@rollup/plugin-babel" : "6.0.4",
-        "mocha" : "10.2.0",
+        "mocha" : "10.3.0",
         "sinon" : "17.0.1",
         "eslint" : "8.56.0",
         "eslint-plugin-import" : "2.29.1",
