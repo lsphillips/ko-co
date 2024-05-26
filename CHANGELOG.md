@@ -2,6 +2,10 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.5.2 - 2024-05-26
+
+The package repository has moved and it's now reflected in the package metadata; this version contains no functionality changes.
+
 ## 1.5.1 - 2021-05-16
 
 ### Changed

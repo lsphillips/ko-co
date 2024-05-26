@@ -1,7 +1,7 @@
-# KoCo
+# `ko-co`
 
 [![Available from NPM](https://img.shields.io/npm/v/ko-co.svg?maxAge=900)](https://www.npmjs.com/package/ko-co)
-[![Built using GitHub Action](https://github.com/lsphillips/KoCo/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/lsphillips/KoCo/actions)
+[![Built using GitHub Action](https://github.com/lsphillips/ko-co/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/lsphillips/ko-co/actions)
 
 Adds support for the Konami Code; making your website automatically cool.
 
