@@ -10,23 +10,6 @@ export default [
 			'ko-co.cjs'
 		]
 	},
-	{
-		files : [
-			'tests/**/*.test.js'
-		],
-
-		languageOptions :
-		{
-			globals : {
-				'before'     : 'readonly',
-				'after'      : 'readonly',
-				'afterEach'  : 'readonly',
-				'beforeEach' : 'readonly',
-				'describe'   : 'readonly',
-				'it'         : 'readonly'
-			}
-		}
-	},
 	...protectMeFromMyStupidity(),
 	...andFromWritingStupidWebApplications()
 ];
