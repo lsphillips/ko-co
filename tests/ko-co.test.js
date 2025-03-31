@@ -34,7 +34,7 @@ describe('koco', function ()
 		koco = window.koco;
 
 		// Setup event capturer.
-		capturer = new EventCapturer('konamicode', window.document);
+		capturer = new EventCapturer('konamicode', window);
 	});
 
 	beforeEach(function ()

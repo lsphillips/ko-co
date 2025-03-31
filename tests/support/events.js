@@ -10,10 +10,10 @@ export class EventCapturer
 	#document = null;
 	#handler  = mock.fn();
 
-	constructor (event, document)
+	constructor (event, window)
 	{
 		this.#event    = event;
-		this.#document = document;
+		this.#document = window.document;
 	}
 
 	start ()
