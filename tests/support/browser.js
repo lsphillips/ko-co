@@ -2,33 +2,27 @@ import {
 	rollup
 } from 'rollup';
 import {
-	loadConfigFile
-} from 'rollup/loadConfigFile';
-import {
 	JSDOM
 } from 'jsdom';
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-async function bundleKoCo ()
+async function loadKoCo ()
 {
-	const {
-		options
-	} = await loadConfigFile('rollup.config.js');
-
-	const config = options.find(option => option.output[0].format === 'umd');
-
 	let bundle;
 
 	try
 	{
-		bundle = await rollup(config);
+		bundle = await rollup({
+			input : 'src/ko-co.js'
+		});
 
 		const {
 			output
-		} = await bundle.generate(
-			config.output[0]
-		);
+		} = await bundle.generate({
+			name    : 'koco',
+			format  : 'iife'
+		});
 
 		return output[0].code;
 	}
@@ -42,7 +36,7 @@ async function bundleKoCo ()
 
 export async function createBrowserWithKoCo ()
 {
-	const library = await bundleKoCo();
+	const koco = await loadKoCo();
 
 	const {
 		window
@@ -53,7 +47,7 @@ export async function createBrowserWithKoCo ()
 	const script = window.document.createElement('script');
 
 	script.innerHTML = `
-		${library}
+		${koco}
 	`;
 
 	window.document.head.appendChild(script);
