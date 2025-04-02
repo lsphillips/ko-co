@@ -7,7 +7,7 @@ import {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-async function loadKoCo ()
+async function loadLibrary ()
 {
 	let bundle;
 
@@ -20,7 +20,7 @@ async function loadKoCo ()
 		const {
 			output
 		} = await bundle.generate({
-			name    : 'koco',
+			name    : 'library',
 			format  : 'iife'
 		});
 
@@ -34,9 +34,9 @@ async function loadKoCo ()
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-export async function createBrowserWithKoCo ()
+export async function createBrowserWithLibrary ()
 {
-	const koco = await loadKoCo();
+	const koco = await loadLibrary();
 
 	const {
 		window
