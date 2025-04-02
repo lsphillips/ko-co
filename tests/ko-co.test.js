@@ -10,24 +10,24 @@ import {
 } from 'node:test';
 import assert from 'node:assert';
 import {
-	createBrowserWithKoCo
+	createBrowserWithLibrary
 } from './support/browser.js';
 import EventCapturer from './support/event-capturer.js';
 import Keyboard from './support/keyboard.js';
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-describe('koco', function ()
+describe('ko-co', function ()
 {
 	let window, capturer, keyboard, koco, removeSupportForTheKonamiCode;
 
 	before(async function ()
 	{
 		// Setup browser.
-		window = await createBrowserWithKoCo();
+		window = await createBrowserWithLibrary();
 
 		// Setup KoCo.
-		koco = window.koco;
+		koco = window.library;
 
 		// Setup event capturer.
 		capturer = new EventCapturer('konamicode', window);
