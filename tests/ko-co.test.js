@@ -12,18 +12,14 @@ import assert from 'node:assert';
 import {
 	createBrowserWithKoCo
 } from './support/browser.js';
-import {
-	EventCapturer
-} from './support/events.js';
-import {
-	performKeyPresses
-} from './support/keyboard.js';
+import EventCapturer from './support/event-capturer.js';
+import Keyboard from './support/keyboard.js';
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 describe('koco', function ()
 {
-	let window, capturer, koco, removeSupportForTheKonamiCode;
+	let window, capturer, keyboard, koco, removeSupportForTheKonamiCode;
 
 	before(async function ()
 	{
@@ -35,6 +31,9 @@ describe('koco', function ()
 
 		// Setup event capturer.
 		capturer = new EventCapturer('konamicode', window);
+
+		// Setup keyboard.
+		keyboard = new Keyboard(window);
 	});
 
 	beforeEach(function ()
@@ -62,7 +61,7 @@ describe('koco', function ()
 			removeSupportForTheKonamiCode = koco.addSupportForTheKonamiCode();
 
 			// Act.
-			performKeyPresses(window, [
+			keyboard.performKeyPresses([
 				'ArrowUp',
 				'ArrowUp',
 				'ArrowDown',
@@ -75,13 +74,20 @@ describe('koco', function ()
 				'a'
 			]);
 
+			const events = capturer.getCapturedEvents();
+
 			// Assert.
-			assert.ok(capturer.hasCapturedEvent({
-				type       : window.CustomEvent,
-				bubbles    : true,
-				cancelable : true,
-				target     : window.document
-			}));
+			assert.strictEqual(events.length, 1);
+
+			// Assert.
+			assert.ok(events[0] instanceof window.CustomEvent);
+
+			// Assert.
+			assert.strictEqual(events[0].bubbles, true);
+			assert.strictEqual(events[0].cancelable, true);
+
+			// Assert.
+			assert.strictEqual(events[0].target, window.document);
 		});
 
 		it('shall enable the `konamicode` event to even be emitted when the user has their caps lock enabled', function ()
@@ -90,7 +96,7 @@ describe('koco', function ()
 			removeSupportForTheKonamiCode = koco.addSupportForTheKonamiCode();
 
 			// Act.
-			performKeyPresses(window, [
+			keyboard.performKeyPresses([
 				'ArrowUp',
 				'ArrowUp',
 				'ArrowDown',
@@ -104,12 +110,7 @@ describe('koco', function ()
 			]);
 
 			// Assert.
-			assert.ok(capturer.hasCapturedEvent({
-				type       : window.CustomEvent,
-				bubbles    : true,
-				cancelable : true,
-				target     : window.document
-			}));
+			assert.strictEqual(capturer.getCapturedEventCount(), 1);
 		});
 
 		it('shall enable the `konamicode` event to be emitted by the element that the user used to enter the Konami Code', function ()
@@ -126,7 +127,7 @@ describe('koco', function ()
 			removeSupportForTheKonamiCode = koco.addSupportForTheKonamiCode();
 
 			// Act.
-			performKeyPresses(window, [
+			keyboard.performKeyPresses([
 				'ArrowUp',
 				'ArrowUp',
 				'ArrowDown',
@@ -139,13 +140,13 @@ describe('koco', function ()
 				'a'
 			], input);
 
+			const events = capturer.getCapturedEvents();
+
 			// Assert.
-			assert.ok(capturer.hasCapturedEvent({
-				type       : window.CustomEvent,
-				bubbles    : true,
-				cancelable : true,
-				target     : input
-			}));
+			assert.strictEqual(events.length, 1);
+
+			// Assert.
+			assert.strictEqual(events[0].target, input);
 		});
 
 		it('shall enable the `konamicode` event to be emitted every time the Konami Code sequence is entered followed by the Enter key when `options.requireEnterPress` is `true`', function ()
@@ -156,7 +157,7 @@ describe('koco', function ()
 			});
 
 			// Act.
-			performKeyPresses(window, [
+			keyboard.performKeyPresses([
 				'ArrowUp',
 				'ArrowUp',
 				'ArrowDown',
@@ -170,22 +171,15 @@ describe('koco', function ()
 			]);
 
 			// Assert.
-			assert.ok(
-				capturer.hasNotCapturedAnyEvent()
-			);
+			assert.strictEqual(capturer.getCapturedEventCount(), 0);
 
 			// Act.
-			performKeyPresses(window, [
+			keyboard.performKeyPresses([
 				'Enter'
 			]);
 
 			// Assert.
-			assert.ok(capturer.hasCapturedEvent({
-				type       : window.CustomEvent,
-				bubbles    : true,
-				cancelable : true,
-				target     : window.document
-			}));
+			assert.strictEqual(capturer.getCapturedEventCount(), 1);
 		});
 
 		it('shall enable the `konamicode` event to even be emitted when the user takes a long time between any of the keys in the Konami Code sequence', async function ()
@@ -194,7 +188,7 @@ describe('koco', function ()
 			removeSupportForTheKonamiCode = koco.addSupportForTheKonamiCode();
 
 			// Act.
-			performKeyPresses(window, [
+			keyboard.performKeyPresses([
 				'ArrowUp',
 				'ArrowUp'
 			]);
@@ -203,7 +197,7 @@ describe('koco', function ()
 			await setTimeout(4500);
 
 			// Act.
-			performKeyPresses(window, [
+			keyboard.performKeyPresses([
 				'ArrowDown',
 				'ArrowDown',
 				'ArrowLeft',
@@ -215,12 +209,7 @@ describe('koco', function ()
 			]);
 
 			// Assert.
-			assert.ok(capturer.hasCapturedEvent({
-				type       : window.CustomEvent,
-				bubbles    : true,
-				cancelable : true,
-				target     : window.document
-			}));
+			assert.strictEqual(capturer.getCapturedEventCount(), 1);
 		});
 
 		it('shall enable the `konamicode` event to only be emitted when the Konami Code sequence is not interrupted by an unexpected key (progress will be reset)', function ()
@@ -229,7 +218,7 @@ describe('koco', function ()
 			removeSupportForTheKonamiCode = koco.addSupportForTheKonamiCode();
 
 			// Act.
-			performKeyPresses(window, [
+			keyboard.performKeyPresses([
 				'ArrowUp',
 				'ArrowUp',
 				'ArrowDown',
@@ -244,12 +233,10 @@ describe('koco', function ()
 			]);
 
 			// Assert.
-			assert.ok(
-				capturer.hasNotCapturedAnyEvent()
-			);
+			assert.strictEqual(capturer.getCapturedEventCount(), 0);
 
 			// Act.
-			performKeyPresses(window, [
+			keyboard.performKeyPresses([
 				'ArrowUp',
 				'ArrowUp',
 				'ArrowDown',
@@ -263,12 +250,7 @@ describe('koco', function ()
 			]);
 
 			// Assert.
-			assert.ok(capturer.hasCapturedEvent({
-				type       : window.CustomEvent,
-				bubbles    : true,
-				cancelable : true,
-				target     : window.document
-			}));
+			assert.strictEqual(capturer.getCapturedEventCount(), 1);
 		});
 
 		it('shall enable the `konamicode` event to only be emitted when the user does not take any longer than the number of milliseconds specified by `options.allowedTimeBetweenKeys` between any of the keys in the Konami Code sequence (progress will be reset)', async function ()
@@ -279,7 +261,7 @@ describe('koco', function ()
 			});
 
 			// Act.
-			performKeyPresses(window, [
+			keyboard.performKeyPresses([
 				'ArrowUp',
 				'ArrowUp'
 			]);
@@ -288,7 +270,7 @@ describe('koco', function ()
 			await setTimeout(1500);
 
 			// Act.
-			performKeyPresses(window, [
+			keyboard.performKeyPresses([
 				'ArrowDown',
 				'ArrowDown',
 				'ArrowLeft',
@@ -300,12 +282,10 @@ describe('koco', function ()
 			]);
 
 			// Assert.
-			assert.ok(
-				capturer.hasNotCapturedAnyEvent()
-			);
+			assert.strictEqual(capturer.getCapturedEventCount(), 0);
 
 			// Act.
-			performKeyPresses(window, [
+			keyboard.performKeyPresses([
 				'ArrowUp',
 				'ArrowUp',
 				'ArrowDown',
@@ -319,12 +299,7 @@ describe('koco', function ()
 			]);
 
 			// Assert.
-			assert.ok(capturer.hasCapturedEvent({
-				type       : window.CustomEvent,
-				bubbles    : true,
-				cancelable : true,
-				target     : window.document
-			}));
+			assert.strictEqual(capturer.getCapturedEventCount(), 1);
 		});
 	});
 });
